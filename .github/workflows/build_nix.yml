@@ -4,6 +4,10 @@ name: Build on Ubuntu
 on:
   pull_request:
 
+env:
+  CURL_GET: curl -fL --retry 3 --retry-delay 2
+  PATH_GET: https://github.com/mkn/mkn/releases/download/latest
+
 jobs:
   build:
     name: Ubuntu
@@ -14,6 +18,6 @@ jobs:
 
     - run: |
         ./mkn.sh
-        curl -Lo mkn https://github.com/mkn/mkn/releases/download/latest/mkn_nix
+        $CURL_GET -o mkn ${PATH_GET}/mkn_nix
         chmod +x mkn
         ./mkn clean build -dtOa -fPIC
